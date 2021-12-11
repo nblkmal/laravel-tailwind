@@ -17,9 +17,12 @@ Route::get('/', function () {
     return view('auth.login');
 })->name('login');
 
-// Route::get('/home', function () {
-//     return view('welcome');
-// });
+Route::get('/documentation', function () {
+    return view('docs');
+})->name('docs');
+Route::get('/places', function () {
+    return view('places.index');
+})->name('places');
 
 
 
