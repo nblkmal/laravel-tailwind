@@ -19,6 +19,7 @@ class CreateDonationsTable extends Migration
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->string('note')->nullable();
             $table->integer('amount')->nullable();
             $table->boolean('payment_status')->default(false);
             $table->string('toyyibPay_bill_code')->nullable();

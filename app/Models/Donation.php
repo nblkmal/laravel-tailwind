@@ -15,6 +15,7 @@ class Donation extends Model
         'email',
         'phone',
         'amount',
+        'note',
         'payment_status',
         'toyyibPay_bill_code',
     ];
