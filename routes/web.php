@@ -20,9 +20,14 @@ Route::get('/', function () {
 Route::get('/documentation', function () {
     return view('docs');
 })->name('docs');
+
 Route::get('/places', function () {
     return view('places.index');
 })->name('places');
+
+Route::get('/donate', function () {
+    return view('donate.index');
+})->name('donate');
 
 
 
