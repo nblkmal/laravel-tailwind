@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Donation;
+use Illuminate\Support\Str;
 
 class DonationObserver
 {
