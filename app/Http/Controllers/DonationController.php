@@ -140,4 +140,13 @@ class DonationController extends Controller
         }
     }
 
+    // BILLPLZ API
+    // $key = 'Basic '.base64_encode(config('services.billplz.secret'));
+    // $url = config('services.billplz.url-sandbox').'payment_gateways';
+
+    // $response = Http::withHeaders([
+    //     'Authorization' => $key,
+    // ])->get($url);
+
+    // dd($response->json());
 }
