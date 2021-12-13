@@ -21,15 +21,6 @@
                         <a href="{{ route('donate:runbill', [$bank['CODE'], $donation]) }}" class="border rounded-lg px-auto py-3 text-center">{{ $bank['NAME'] }}</a>
                     @endforeach
                 </div>
-
-                <div class="flex w-full">
-                    <button type="submit" class="flex mt-2 items-center justify-center focus:outline-none mt-4 mb-3 w-full bg-green-700 hover:bg-green-500 text-white py-2 rounded-md transition duration-100">
-                        <span class="mr-2">Donate now</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </button>
-                </div>
                 
             </form>
 		</div>
