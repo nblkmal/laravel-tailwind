@@ -16,7 +16,7 @@
         <!-- component -->
         <div class="h-screen w-screen flex bg-gray-100 py-5">
             <!-- container -->
-            <aside class="flex flex-col items-center bg-white text-gray-700 shadow h-full rounded-lg ml-5">
+            <aside class="flex flex-col items-center bg-white text-gray-700 shadow h-full rounded-lg ml-5 hidden md:block">
                 <!-- Side Nav Bar-->
 
                 <div class="h-16 flex items-center w-full bg-[#E83641] rounded-lg">
@@ -61,7 +61,7 @@
                     </li>
 
                     <li class="hover:bg-gray-100 hover:rounded-full">
-                        <a href="{{ route('donate') }}" class="h-16 px-6 flex justify-center items-center w-full focus:text-orange-500">
+                        <a href="{{ route('donate:index') }}" class="h-16 px-6 flex justify-center items-center w-full focus:text-orange-500">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>

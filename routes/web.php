@@ -25,9 +25,10 @@ Route::get('/places', function () {
     return view('places.index');
 })->name('places');
 
-Route::get('/donate', function () {
-    return view('donate.index');
-})->name('donate');
+Route::get('/donate', [App\Http\Controllers\DonationController::class, 'index'])->name('donate:index');
+Route::post('/donate/create', [App\Http\Controllers\DonationController::class, 'create'])->name('donate:create');
+Route::get('/donate/return-url', [App\Http\Controllers\DonationController::class, 'returnUrl'])->name('donate:return-url');
+Route::get('/donate/callback-url', [App\Http\Controllers\DonationController::class, 'callbackUrl'])->name('donate:callback-url');
 
 
 
