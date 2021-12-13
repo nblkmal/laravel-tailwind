@@ -13,6 +13,35 @@ class DonationController extends Controller
         return view('donate.index');
     }
 
+    public function bank(Donation $donation)
+    {
+        $url = config('services.toyyibpay.url-dev').'getBankFPX';
+        $response = Http::get($url);
+        $banks = $response->json();
+
+        return view('donate.bank', compact('banks', 'donation'));
+    }
+
+    public function runBill($bank, Donation $donation)
+    {
+        $billCode = $donation->toyyibPay_bill_code;
+
+        $url = config('services.toyyibpay.url-dev-1').'runBill';
+        $key = config('services.toyyibpay.secret');
+
+        $response = Http::asForm()->post($url, [
+            'userSecretKey' => $key,
+            'billCode' => $billCode,
+            'billpaymentAmount' => '2.00',
+            'billpaymentPayorName' => 'Sumayyah',
+            'billpaymentPayorPhone'=>'60197789876',
+            'billpaymentPayorEmail'=>'sumayyah@gmail.com',
+            'billBankID'=>$bank
+        ]);
+
+        return $response;
+    }
+
     public function create(Request $request)
     {
         $validated = $request->validate([
@@ -51,14 +80,14 @@ class DonationController extends Controller
             'billPhone' => $request->phone,
             'billContentEmail'=>'Thank you for donating!',
         ])->json();
-
+        
         $billCode = $response[0]['BillCode'];
 
         $donation->update([
             'toyyibPay_bill_code' => $billCode,
         ]);
-        
-        return back();
+
+        return redirect()->route('donate:bank', $donation);
     }
 
     public function returnUrl(Request $request)
@@ -66,26 +95,23 @@ class DonationController extends Controller
         $donate = Donation::where('toyyibpay_bill_code', $request->billcode)->first();
         $donater = $request->name;
 
-        if($donate)
-        { 
-            if($donate->uuid.$donate->id == $request->order_id)
-            {
-                if($request->status_id === '1')
-                {
-                    $donate->update(['payment_status'=>1]);
-
-                    // return view('donate.paid', compact('donater'));
-                    return 'success';
-                }
-                // return view('donate.try', compact('donate'));
-                return 'please try again';
-            }
-            return 'response not valid';
-        }
-        else
-        {
+        if (empty($donate)) {
             return 'Please check your response';
         }
+
+        if($donate->uuid.$donate->id != $request->order_id) {
+            return 'response not valid';
+        }
+
+        if($request->status_id !== '1')
+        {
+            $message = 'Fail';
+            return view('donate.receipt', compact('donater', 'message'));
+        }
+
+        $message = 'Success';
+
+        return view('donate.receipt', compact('donater', 'message'));
     }
 
     public function callbackUrl()
@@ -113,4 +139,5 @@ class DonationController extends Controller
             \info(['failed' => 'Re-check response']);
         }
     }
+
 }
