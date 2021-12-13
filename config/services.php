@@ -30,4 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'toyyibpay' => [
+        'secret' => env('TOYYIBPAY_SECRET_KEY'),
+        'url-dev' => env('TOYYIBPAY_URL_DEV'),
+        'url-prod' => env('TOYYIBPAY_URL_PROD'),
+    ]
+
 ];
