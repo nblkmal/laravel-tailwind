@@ -33,6 +33,7 @@ return [
     'toyyibpay' => [
         'secret' => env('TOYYIBPAY_SECRET_KEY'),
         'url-dev' => env('TOYYIBPAY_URL_DEV'),
+        'url-dev-1' => env('TOYYIBPAY_URL_DEV_1'),
         'url-prod' => env('TOYYIBPAY_URL_PROD'),
     ]
 
