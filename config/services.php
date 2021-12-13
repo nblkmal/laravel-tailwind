@@ -35,6 +35,12 @@ return [
         'url-dev' => env('TOYYIBPAY_URL_DEV'),
         'url-dev-1' => env('TOYYIBPAY_URL_DEV_1'),
         'url-prod' => env('TOYYIBPAY_URL_PROD'),
-    ]
+    ],
+
+    'billplz' => [
+        'secret' => env('BILLPLZ_SECRET_KEY'),
+        'url-sandbox' => env('BILLPLZ_URL_SANDBOX'),
+        'url' => env('BILLPLZ_URL'),
+    ],
 
 ];
