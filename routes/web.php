@@ -27,6 +27,9 @@ Route::get('/places', function () {
 
 Route::get('/donate', [App\Http\Controllers\DonationController::class, 'index'])->name('donate:index');
 Route::post('/donate/create', [App\Http\Controllers\DonationController::class, 'create'])->name('donate:create');
+Route::get('/donate/bank/{donation}', [App\Http\Controllers\DonationController::class, 'bank'])->name('donate:bank');
+Route::get('/donate/receipt/{message}', [App\Http\Controllers\DonationController::class, 'receipt'])->name('donate:receipt');
+Route::get('/donate/runBill/{bank}/{donation}', [App\Http\Controllers\DonationController::class, 'runBill'])->name('donate:runbill');
 Route::get('/donate/return-url', [App\Http\Controllers\DonationController::class, 'returnUrl'])->name('donate:return-url');
 Route::get('/donate/callback-url', [App\Http\Controllers\DonationController::class, 'callbackUrl'])->name('donate:callback-url');
 
