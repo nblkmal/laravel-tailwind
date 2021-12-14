@@ -140,13 +140,69 @@ class DonationController extends Controller
         }
     }
 
-    // BILLPLZ API
-    // $key = 'Basic '.base64_encode(config('services.billplz.secret'));
-    // $url = config('services.billplz.url-sandbox').'payment_gateways';
+    public function billplz_create(Request $request)
+    {
+        // store donater info
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:1',
+            'phone' => 'required|numeric|digits_between:1,10'
+        ]);
 
-    // $response = Http::withHeaders([
-    //     'Authorization' => $key,
-    // ])->get($url);
+        // multiply input amount with 100
+        $amount = $request->amount * 100;
 
-    // dd($response->json());
+        $donation = Donation::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'amount' => $amount,
+            'note' => $request->note,
+        ]);
+
+        // redirect bank option
+        return redirect()->route('donate:billplz:bank', $donation);
+    }
+
+    public function billplz_bank(Donation $donation)
+    {
+        $key = 'Basic '.base64_encode(config('services.billplz.secret'));
+        $url = config('services.billplz.url-sandbox').'v4/payment_gateways';
+
+        $response = Http::withHeaders([
+            'Authorization' => $key,
+        ])->get($url);
+
+        $banks = $response->json()['payment_gateways'];
+
+        return view('donate.billplz.bank', compact('banks', 'donation'));
+    }
+
+    public function billplz_create_bill(Donation $donation, $bankCode)
+    {   
+        $collection_id = 'mlkpk949';
+        $mobile = '+60'.$donation->phone;
+
+        $key = 'Basic '.base64_encode(config('services.billplz.secret'));
+        $url = config('services.billplz.url-sandbox').'v3/bills';
+
+        // bypass billplz bill page
+        $response = Http::withHeaders([
+            'Authorization' => $key,
+        ])->asForm()->post($url, [
+            'collection_id' => $collection_id,
+            'description' => $donation->note,
+            'email' => $donation->email,
+            'name' => $donation->name,            
+            'amount' => $donation->amount,
+            'reference_1_label' => "Bank Code",
+            'reference_1' => $bankCode,
+            'callback_url' => route('donate:billplz:callback-url'),
+            'redirect_url' => route('donate:billplz:redirect-url')
+            
+        ]);
+
+        $redirect_url = $response->json()['url']."?auto_submit=true";
+
+        return redirect($redirect_url);
+    }
 }
