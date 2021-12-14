@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,23 @@ Route::get('/donate/receipt/{message}', [App\Http\Controllers\DonationController
 Route::get('/donate/runBill/{bank}/{donation}', [App\Http\Controllers\DonationController::class, 'runBill'])->name('donate:runbill');
 Route::get('/donate/return-url', [App\Http\Controllers\DonationController::class, 'returnUrl'])->name('donate:return-url');
 Route::get('/donate/callback-url', [App\Http\Controllers\DonationController::class, 'callbackUrl'])->name('donate:callback-url');
+
+Route::get('/donate/billplz/create_bill/{donation}/{bankCode}', [App\Http\Controllers\DonationController::class, 'billplz_create_bill'])->name('donate:billplz:create:bill');
+Route::post('/donate/billplz/create', [App\Http\Controllers\DonationController::class, 'billplz_create'])->name('donate:billplz:create');
+Route::get('/donate/billplz/bank/{donation}', [App\Http\Controllers\DonationController::class, 'billplz_bank'])->name('donate:billplz:bank');
+Route::post('/donate/billplz/callback-url', function() {
+    \info(['from payment gateway' => $request->all()]);
+})->name('donate:billplz:callback-url');
+Route::get('/donate/billplz/redirect-url', function(Request $request) {
+
+    if($request['billplz']['paid'] != true)
+    {
+        return "fail";
+    } else {
+        return "success";
+    }
+    return $request['billplz'];
+})->name('donate:billplz:redirect-url');
 
 
 
