@@ -12,7 +12,7 @@
         crossorigin="anonymous"
         />
     </head>
-    <body class="font-poppins">
+    <body class="font-poppins" style="background-color: #F3F4F6">
         <!-- component -->
         <div class="h-screen w-screen flex bg-gray-100 py-5">
             <!-- container -->
