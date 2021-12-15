@@ -19,4 +19,18 @@ class Donation extends Model
         'payment_status',
         'toyyibPay_bill_code',
     ];
+
+    public function setPhoneAttribute($value)
+    {
+        if(preg_match("/^([6])\d+/", $value))
+        {
+            $this->attributes['phone'] = $value;
+        } elseif(preg_match("/^([0])\d+/", $value))
+        {
+            $this->attributes['phone'] = "6".$value;
+        } else
+        {
+            $this->attributes['phone'] = "60".$value;
+        }
+    }
 }
